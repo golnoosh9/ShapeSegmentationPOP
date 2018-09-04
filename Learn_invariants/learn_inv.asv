@@ -1,0 +1,18 @@
+pnum=4500;
+nnum=4\
+500;
+mon_num=6;
+inv_num=2*mon_num+(mon_num-1)*mon_num/2;
+[A,b]=generate_coeffs(pnum,nnum,mon_num,inv_num);
+%%%learn second degree inv
+
+c=zeros(inv_num^2+pnum+nnum,1);
+c(1:pnum)=1;
+c(pnum+1:pnum+nnum)=1;
+K.l=pnum+nnum;
+K.s=inv_num;
+[x,y,info]=sedumi(A,b,c',K);
+invs=reshape(x(pnum+nnum+1:pnum+nnum+inv_num^2),inv_num,inv_num);
+elems=chol(invs);
+exp=sum(elems,1)/(inv_num);
+

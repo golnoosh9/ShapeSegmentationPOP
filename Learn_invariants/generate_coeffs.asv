@@ -1,0 +1,54 @@
+%function [pcoeffs,ncoeffs]=generate_coeffs
+%%%pcoef:circle, ncoef:other conics
+pnum=100;
+nnum=1000;
+mon_num=6;
+pcoeffs=zeros(mon_num,pnum);
+ncoefs=zeros(mon_num,nnum);
+inv_num=1+mon_num+mon_num+(mon_num-1)*mon_num/2;
+A=zeros(pnum+nnum,inv_num^2);
+b=z
+for i=1:pnum
+    temp=ones(1,1+mon_num+mon_num+(mon_num-1)*mon_num/2);
+    rcoef=(rand(mon_num,1)-ones(mon_num,1)/2)*2;
+     radi=rand(1)/2;
+     rcoef(5)=0;
+     rcoef(6)=rcoef(4);
+     rcoef(1)=radi^2-0.25*(rcoef(2)^2)-0.25*(rcoef(3)^2);
+     pcoeffs(:,i)=rcoef;
+     temp(1+1:1+mon_num)=rcoef;
+     pmat=rcoef*rcoef';
+     temp(1+mon_num+1:1+mon_num+mon_num)=diag(pmat);
+     row1=pmat(1,2:6);
+    row2=pmat(2,3:6);
+    row3=pmat(3,4:6);
+    row4=pmat(4,5:6);
+    row5=pmat(5,6);
+    temp(1+2*mon_num+1:1+mon_num+mon_num+(mon_num-1)*mon_num/2)=[row1,row2,row3,row4,row5];
+   temp_m=temp'*temp;
+     A(i,:)=reshape(temp_m,1,inv_num^2);
+     
+     
+    
+end
+
+for i=1+pnum:nnum+pnum
+   rcoef=(rand(mon_num,1)-ones(mon_num,1)/2)*2;
+   temp(1+1:1+mon_num)=rcoef;
+     pmat=rcoef*rcoef';
+     temp(1+mon_num+1:1+mon_num+mon_num)=diag(pmat);
+     row1=pmat(1,2:6);
+    row2=pmat(2,3:6);
+    row3=pmat(3,4:6);
+    row4=pmat(4,5:6);
+    row5=pmat(5,6);
+    temp(1+2*mon_num+1:1+mon_num+mon_num+(mon_num-1)*mon_num/2)=[row1,row2,row3,row4,row5];
+   temp_m=temp'*temp;
+     A(i,:)=reshape(temp_m,1,inv_num^2);
+    
+end
+
+
+
+
+%end
